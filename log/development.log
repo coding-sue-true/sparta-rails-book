@@ -1,0 +1,935 @@
+  [1m[35m (53.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (15.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4586083229851210815)[0m
+  [1m[35m (2.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateVolumes (20171122155841)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (26.6ms)[0m  [1m[35mCREATE TABLE "volumes" ("id" bigserial primary key, "title" character varying, "description" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171122155841"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateAuthors (20171122160420)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (21.0ms)[0m  [1m[35mCREATE TABLE "authors" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171122160420"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-11-22 16:04:59.188511"], ["updated_at", "2017-11-22 16:04:59.188511"]]
+  [1m[35m (2.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT pg_advisory_unlock(4586083229851210815)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mVolume Load (2.7ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mVolume Load (0.6ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mVolume Load (0.6ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (4.2ms)[0m  [1m[32mINSERT INTO "volumes" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "hello"], ["description", "this is des"], ["created_at", "2017-11-22 16:19:12.152669"], ["updated_at", "2017-11-22 16:19:12.152669"]]
+  [1m[35m (2.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4586083229851210815)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddColumnAuthorIdToVolumes (20171122162116)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.4ms)[0m  [1m[35mALTER TABLE "volumes" ADD "author_id" integer[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171122162116"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(4586083229851210815)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mAuthor Load (2.6ms)[0m  [1m[34mSELECT  "authors".* FROM "authors" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.6ms)[0m  [1m[32mINSERT INTO "authors" ("first_name", "last_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["first_name", "Rich"], ["last_name", "Gurney"], ["created_at", "2017-11-22 16:24:14.963809"], ["updated_at", "2017-11-22 16:24:14.963809"]]
+  [1m[35m (2.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mAuthor Load (0.6ms)[0m  [1m[34mSELECT  "authors".* FROM "authors" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mAuthor Load (0.6ms)[0m  [1m[34mSELECT  "authors".* FROM "authors" ORDER BY "authors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAuthor Load (0.8ms)[0m  [1m[34mSELECT  "authors".* FROM "authors" ORDER BY "authors"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mVolume Load (0.8ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4586083229851210815)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(4586083229851210815)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" LIMIT $1[0m  [["LIMIT", 11]]
+Started GET "/" for 127.0.0.1 at 2017-11-22 16:42:57 +0000
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (6.7ms)
+Completed 200 OK in 39ms (Views: 21.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-11-22 16:43:09 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (0.8ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (20.2ms)
+Completed 200 OK in 939ms (Views: 908.1ms | ActiveRecord: 8.5ms)
+
+
+Started GET "/authors/new" for 127.0.0.1 at 2017-11-22 16:43:14 +0000
+Processing by AuthorsController#new as HTML
+  Rendering authors/new.html.erb within layouts/application
+  Rendered authors/_form.html.erb (51.3ms)
+  Rendered authors/new.html.erb within layouts/application (62.6ms)
+Completed 200 OK in 96ms (Views: 89.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/authors" for 127.0.0.1 at 2017-11-22 16:43:20 +0000
+Processing by AuthorsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"LIqc85chtIQzDVNBhf8vGSgTaaXuXWS/qmt3s0BX36AIwROZP7e+/N2cA13TBYqKlb8iHeCeg7VhpCPjssTrEQ==", "author"=>{"first_name"=>"Soraia", "last_name"=>"Carmo"}, "commit"=>"Create Author"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "authors" ("first_name", "last_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["first_name", "Soraia"], ["last_name", "Carmo"], ["created_at", "2017-11-22 16:43:20.153042"], ["updated_at", "2017-11-22 16:43:20.153042"]]
+  [1m[35m (2.7ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/authors
+Completed 302 Found in 9ms (ActiveRecord: 3.7ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-11-22 16:43:20 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (0.5ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 30ms (Views: 27.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:43:22 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.7ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (19.2ms)
+Completed 200 OK in 63ms (Views: 36.3ms | ActiveRecord: 8.2ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 16:43:30 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (6.6ms)
+  Rendered volumes/new.html.erb within layouts/application (12.3ms)
+Completed 200 OK in 45ms (Views: 39.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/volumes" for 127.0.0.1 at 2017-11-22 16:43:33 +0000
+Processing by VolumesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/dfgn7WEYEzoRSvPdibX5AwJ62yMS8H2XAJ8UfyqMoRXi1nvwm0ExkMwMh+NlQ5Y+3JPGArVwtDGIRbZtRW2Vw==", "volume"=>{"title"=>"uiffiug", "description"=>"ukdgudk"}, "commit"=>"Create Volume"}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Redirected to http://localhost:3000/volumes
+Completed 302 Found in 22ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:43:33 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 28ms (Views: 25.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 16:43:53 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (4.3ms)
+  Rendered volumes/new.html.erb within layouts/application (7.9ms)
+Completed 200 OK in 42ms (Views: 36.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 16:45:59 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (14.9ms)
+  Rendered volumes/new.html.erb within layouts/application (20.0ms)
+Completed 200 OK in 86ms (Views: 81.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 16:47:04 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (2.4ms)
+  Rendered volumes/new.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 79ms (Views: 76.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:47:07 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (1.6ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 36ms (Views: 28.3ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 16:47:08 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (5.4ms)
+  Rendered volumes/new.html.erb within layouts/application (8.8ms)
+Completed 200 OK in 51ms (Views: 44.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 16:47:44 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (2.3ms)
+  Rendered volumes/new.html.erb within layouts/application (4.4ms)
+Completed 200 OK in 67ms (Views: 62.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/volumes" for 127.0.0.1 at 2017-11-22 16:47:53 +0000
+Processing by VolumesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"5qjGLhjxV6/xFdwOazUdVwjKhw6TMgTPWBfVUuzixeRjkC7qMb2AxZCbbY5VTzvyhF+viDRW4I9U0emehyq7PQ==", "volume"=>{"title"=>"gfkugf", "description"=>"kgdfkdf", "author_id"=>"2"}, "commit"=>"Create Volume"}
+Unpermitted parameter: :author_id
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Redirected to http://localhost:3000/volumes
+Completed 302 Found in 5ms (ActiveRecord: 0.6ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:47:53 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 33ms (Views: 24.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:48:17 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.9ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (5.3ms)
+Completed 200 OK in 35ms (Views: 31.1ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/volumes/1" for 127.0.0.1 at 2017-11-22 16:48:22 +0000
+Processing by VolumesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.6ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/show.html.erb within layouts/application
+  Rendered volumes/show.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 44ms (Views: 25.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:48:53 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 30ms (Views: 27.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 16:48:58 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.7ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (3.2ms)
+  Rendered volumes/edit.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 43ms (Views: 29.2ms | ActiveRecord: 0.7ms)
+
+
+Started PATCH "/volumes/1" for 127.0.0.1 at 2017-11-22 16:49:01 +0000
+Processing by VolumesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"MpO55Bt8bkJKkQMDLpkTb3TDJzOmV0dzZX4qhdkHirqcQsnjtXkJ+tQkQUM21LU7X6GzzOxpeLIvUljyloZDdA==", "volume"=>{"title"=>"hello", "description"=>"this is des", "author_id"=>"2"}, "commit"=>"Update Volume", "id"=>"1"}
+  [1m[36mVolume Load (2.5ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameter: :author_id
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Redirected to http://localhost:3000/volumes/1
+Completed 302 Found in 8ms (ActiveRecord: 3.0ms)
+
+
+Started GET "/volumes/1" for 127.0.0.1 at 2017-11-22 16:49:01 +0000
+Processing by VolumesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.3ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/show.html.erb within layouts/application
+  Rendered volumes/show.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 28ms (Views: 24.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:49:05 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 38ms (Views: 32.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:50:40 +0000
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (1.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (24.3ms)
+Completed 200 OK in 419ms (Views: 382.9ms | ActiveRecord: 8.6ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 16:50:48 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.7ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (47.6ms)
+  Rendered volumes/edit.html.erb within layouts/application (49.9ms)
+Completed 200 OK in 129ms (Views: 91.3ms | ActiveRecord: 15.6ms)
+
+
+Started PATCH "/volumes/1" for 127.0.0.1 at 2017-11-22 16:50:52 +0000
+Processing by VolumesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xWwW3nLwbgKdQo2wK1hUrlpGUKmj1K1KFzoL4TFZ8l1rvWbZ3PUJugP3z/AzFfL6cSTEVunqkotdFnmWftg7kw==", "volume"=>{"title"=>"hello", "description"=>"this is des", "author_id"=>"2"}, "commit"=>"Update Volume", "id"=>"1"}
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Unpermitted parameter: :author_id
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+Redirected to http://localhost:3000/volumes/1
+Completed 302 Found in 35ms (ActiveRecord: 0.8ms)
+
+
+Started GET "/volumes/1" for 127.0.0.1 at 2017-11-22 16:50:52 +0000
+Processing by VolumesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/show.html.erb within layouts/application
+  Rendered volumes/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 27ms (Views: 23.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/1" for 127.0.0.1 at 2017-11-22 16:53:13 +0000
+Processing by VolumesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.3ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/show.html.erb within layouts/application
+  Rendered volumes/show.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 78ms (Views: 74.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-11-22 16:53:18 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (3.1ms)
+Completed 200 OK in 13ms (Views: 8.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-11-22 16:53:55 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (0.8ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (24.6ms)
+Completed 200 OK in 114ms (Views: 98.4ms | ActiveRecord: 10.0ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:53:58 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (4.6ms)
+Completed 200 OK in 64ms (Views: 57.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/1" for 127.0.0.1 at 2017-11-22 16:54:03 +0000
+Processing by VolumesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (1.1ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/show.html.erb within layouts/application
+  Rendered volumes/show.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 34ms (Views: 26.6ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:54:04 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.3ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 44ms (Views: 40.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 16:54:06 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.5ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (1.1ms)
+  Rendered volumes/edit.html.erb within layouts/application (5.9ms)
+Completed 500 Internal Server Error in 24ms (ActiveRecord: 0.5ms)
+
+
+  
+SyntaxError (/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:32: syntax error, unexpected keyword_end, expecting ')'
+'.freeze; end 
+             ^
+/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:34: syntax error, unexpected keyword_ensure, expecting ')'
+          ensure
+                ^
+/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:36: syntax error, unexpected keyword_end, expecting ')'
+          end
+             ^):
+  
+app/views/volumes/_form.html.erb:32: syntax error, unexpected keyword_end, expecting ')'
+app/views/volumes/_form.html.erb:34: syntax error, unexpected keyword_ensure, expecting ')'
+app/views/volumes/_form.html.erb:36: syntax error, unexpected keyword_end, expecting ')'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155541251940'
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:54:11 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.3ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 26ms (Views: 23.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 16:54:19 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (1.6ms)
+  Rendered volumes/new.html.erb within layouts/application (4.1ms)
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:32: syntax error, unexpected keyword_end, expecting ')'
+'.freeze; end 
+             ^
+/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:34: syntax error, unexpected keyword_ensure, expecting ')'
+          ensure
+                ^
+/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:36: syntax error, unexpected keyword_end, expecting ')'
+          end
+             ^):
+  
+app/views/volumes/_form.html.erb:32: syntax error, unexpected keyword_end, expecting ')'
+app/views/volumes/_form.html.erb:34: syntax error, unexpected keyword_ensure, expecting ')'
+app/views/volumes/_form.html.erb:36: syntax error, unexpected keyword_end, expecting ')'
+app/views/volumes/new.html.erb:3:in `_app_views_volumes_new_html_erb___2626137731753342619_70155540743140'
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:54:23 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 27ms (Views: 24.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:54:46 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.5ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 68ms (Views: 64.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 16:55:32 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (1.6ms)
+  Rendered volumes/edit.html.erb within layouts/application (4.6ms)
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 0.4ms)
+
+
+  
+SyntaxError (/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:32: syntax error, unexpected keyword_end, expecting ')'
+'.freeze; end 
+             ^
+/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:34: syntax error, unexpected keyword_ensure, expecting ')'
+          ensure
+                ^
+/Users/tech-a04/engineering/07.RubyOnRails/Book/app/views/volumes/_form.html.erb:36: syntax error, unexpected keyword_end, expecting ')'
+          end
+             ^):
+  
+app/views/volumes/_form.html.erb:32: syntax error, unexpected keyword_end, expecting ')'
+app/views/volumes/_form.html.erb:34: syntax error, unexpected keyword_ensure, expecting ')'
+app/views/volumes/_form.html.erb:36: syntax error, unexpected keyword_end, expecting ')'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155545428200'
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 16:55:55 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (8.1ms)
+  Rendered volumes/edit.html.erb within layouts/application (11.2ms)
+Completed 500 Internal Server Error in 21ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :author_first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__2154475001901706235_70155539514420'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__2154475001901706235_70155539514420'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155539569020'
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 16:58:02 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 73ms (Views: 69.8ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 16:58:05 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.6ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (4.9ms)
+  Rendered volumes/edit.html.erb within layouts/application (8.4ms)
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 0.6ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__2154475001901706235_70155506931280'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__2154475001901706235_70155506931280'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155506965640'
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 16:58:56 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.3ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (3.0ms)
+  Rendered volumes/edit.html.erb within layouts/application (6.7ms)
+Completed 200 OK in 74ms (Views: 69.0ms | ActiveRecord: 0.3ms)
+
+
+Started PATCH "/volumes/1" for 127.0.0.1 at 2017-11-22 16:58:58 +0000
+Processing by VolumesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Y8cJEP8qTF+zKvmbWbqUK/6JuIQM2FQuL/yitYLUpkTm/+HU1mabNdKkSBtnwLKOchyQAqu8sG4jOp556RzYnQ==", "volume"=>{"title"=>"hello", "description"=>"this is des"}, "commit"=>"Update Volume", "id"=>"1"}
+  [1m[36mVolume Load (0.9ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Redirected to http://localhost:3000/volumes/1
+Completed 302 Found in 8ms (ActiveRecord: 1.8ms)
+
+
+Started GET "/volumes/1" for 127.0.0.1 at 2017-11-22 16:58:58 +0000
+Processing by VolumesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.5ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/show.html.erb within layouts/application
+  Rendered volumes/show.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 36ms (Views: 31.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 17:02:57 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.9ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (4.5ms)
+  Rendered volumes/edit.html.erb within layouts/application (6.8ms)
+Completed 500 Internal Server Error in 25ms (ActiveRecord: 0.9ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__2154475001901706235_70155552616540'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__2154475001901706235_70155552616540'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155552662800'
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 17:04:06 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.5ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (5.7ms)
+  Rendered volumes/edit.html.erb within layouts/application (8.3ms)
+Completed 500 Internal Server Error in 34ms (ActiveRecord: 0.5ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__2154475001901706235_70155553664520'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__2154475001901706235_70155553664520'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155553710740'
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 17:04:10 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 71ms (Views: 68.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 17:04:12 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.6ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (8.3ms)
+  Rendered volumes/edit.html.erb within layouts/application (11.3ms)
+Completed 500 Internal Server Error in 24ms (ActiveRecord: 0.6ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__2154475001901706235_70155541859640'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__2154475001901706235_70155541859640'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155543895540'
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 17:04:17 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 25ms (Views: 21.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 17:04:19 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  [1m[36mAuthor Load (0.9ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered volumes/_form.html.erb (16.3ms)
+  Rendered volumes/new.html.erb within layouts/application (21.0ms)
+Completed 200 OK in 57ms (Views: 36.3ms | ActiveRecord: 7.2ms)
+
+
+Started POST "/volumes" for 127.0.0.1 at 2017-11-22 17:04:30 +0000
+Processing by VolumesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"EwGkfHa2sHj9ktwOHNSruNeYfY8A2ERcUFObNg1BluG5XR0MAV/U8lbnxd7nZ3IEIOPZ+4ZGR3rKcPG+RP4SMg==", "volume"=>{"title"=>"ygfd", "description"=>"kgkd", "author_id"=>"2"}, "commit"=>"Create Volume"}
+Unpermitted parameter: :author_id
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+Redirected to http://localhost:3000/volumes
+Completed 302 Found in 7ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 17:04:30 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.9ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (4.6ms)
+Completed 200 OK in 29ms (Views: 24.8ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 17:05:05 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 67ms (Views: 63.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-11-22 17:05:15 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.3ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (6.8ms)
+  Rendered volumes/edit.html.erb within layouts/application (10.4ms)
+Completed 500 Internal Server Error in 23ms (ActiveRecord: 0.3ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__2154475001901706235_70155506771920'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__2154475001901706235_70155506771920'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb___1905599370183800718_70155542027040'
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 17:05:25 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 26ms (Views: 23.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-11-22 17:06:46 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  [1m[36mAuthor Load (0.5ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered volumes/_form.html.erb (6.5ms)
+  Rendered volumes/new.html.erb within layouts/application (9.8ms)
+Completed 200 OK in 42ms (Views: 36.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-11-22 17:06:52 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.8ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 41ms (Views: 37.6ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-11-22 17:06:53 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (0.4ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 35ms (Views: 29.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/authors/new" for 127.0.0.1 at 2017-11-22 17:06:56 +0000
+Processing by AuthorsController#new as HTML
+  Rendering authors/new.html.erb within layouts/application
+  Rendered authors/_form.html.erb (4.5ms)
+  Rendered authors/new.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 36ms (Views: 30.8ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/authors" for 127.0.0.1 at 2017-11-22 17:07:01 +0000
+Processing by AuthorsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"b1kobg5QCFkABNWVhcIlpRDJqvcvkzVf74Y1LhIyWfxLEqcEpsYCIe6VhYnTOIA2rWXhTyFQ0lUkSWF+4KFtTQ==", "author"=>{"first_name"=>"hshsh", "last_name"=>"ssjs"}, "commit"=>"Create Author"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (5.6ms)[0m  [1m[32mINSERT INTO "authors" ("first_name", "last_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["first_name", "hshsh"], ["last_name", "ssjs"], ["created_at", "2017-11-22 17:07:01.977865"], ["updated_at", "2017-11-22 17:07:01.977865"]]
+  [1m[35m (3.8ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/authors
+Completed 302 Found in 15ms (ActiveRecord: 9.5ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-11-22 17:07:01 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (0.5ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 27ms (Views: 23.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-12-22 22:03:59 +0000
+  [1m[35m (7.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (6.9ms)
+Completed 200 OK in 43ms (Views: 22.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-12-22 22:04:18 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (5.0ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (61.6ms)
+Completed 200 OK in 486ms (Views: 425.9ms | ActiveRecord: 39.2ms)
+
+
+Started GET "/authors/new" for 127.0.0.1 at 2017-12-22 22:04:22 +0000
+Processing by AuthorsController#new as HTML
+  Rendering authors/new.html.erb within layouts/application
+  Rendered authors/_form.html.erb (43.3ms)
+  Rendered authors/new.html.erb within layouts/application (50.5ms)
+Completed 200 OK in 141ms (Views: 129.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/authors" for 127.0.0.1 at 2017-12-22 22:04:28 +0000
+Processing by AuthorsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fsvN6AIKnvN9JA9m5wu32xmeuAnG4xvhzUCOG4hvL61agEKCqpyUi5O1X3qx8RJIpDLzscgg/OsGj9pLevwbHA==", "author"=>{"first_name"=>"a;a;;a", "last_name"=>"test"}, "commit"=>"Create Author"}
+  [1m[35m (2.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.1ms)[0m  [1m[32mINSERT INTO "authors" ("first_name", "last_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["first_name", "a;a;;a"], ["last_name", "test"], ["created_at", "2017-12-22 22:04:28.321847"], ["updated_at", "2017-12-22 22:04:28.321847"]]
+  [1m[35m (2.9ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/authors
+Completed 302 Found in 13ms (ActiveRecord: 8.4ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-12-22 22:04:28 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (0.3ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 25ms (Views: 22.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-12-22 22:04:30 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.9ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (16.8ms)
+Completed 200 OK in 74ms (Views: 51.0ms | ActiveRecord: 6.1ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-12-22 22:04:34 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.5ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (15.7ms)
+  Rendered volumes/edit.html.erb within layouts/application (20.1ms)
+Completed 500 Internal Server Error in 50ms (ActiveRecord: 1.5ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__4099458330000915470_70322096687300'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__4099458330000915470_70322096687300'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb__2178175730394055273_70322096460960'
+Started GET "/volumes" for 127.0.0.1 at 2017-12-22 22:04:44 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 26ms (Views: 23.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/volumes/1" for 127.0.0.1 at 2017-12-22 22:10:25 +0000
+Processing by VolumesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.6ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/show.html.erb within layouts/application
+  Rendered volumes/show.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 95ms (Views: 88.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-12-22 22:10:27 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (1.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 48ms (Views: 39.5ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/volumes/1/edit" for 127.0.0.1 at 2017-12-22 22:10:28 +0000
+Processing by VolumesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering volumes/edit.html.erb within layouts/application
+  Rendered volumes/_form.html.erb (6.6ms)
+  Rendered volumes/edit.html.erb within layouts/application (12.0ms)
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 0.4ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for nil:NilClass):
+    23: 
+    24:   <div class="field">
+    25:     <%= form.label :author_id %>
+    26:     <%= collection_select(:volume, :author_id, @authors, :id, :first_name) %>
+    27:   </div>
+    28: 
+    29:   <div class="actions">
+  
+app/views/volumes/_form.html.erb:26:in `block in _app_views_volumes__form_html_erb__4099458330000915470_70322056099860'
+app/views/volumes/_form.html.erb:1:in `_app_views_volumes__form_html_erb__4099458330000915470_70322056099860'
+app/views/volumes/edit.html.erb:3:in `_app_views_volumes_edit_html_erb__2178175730394055273_70322086270580'
+Started GET "/volumes" for 127.0.0.1 at 2017-12-22 22:10:47 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.5ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 25ms (Views: 23.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/volumes/new" for 127.0.0.1 at 2017-12-22 22:10:48 +0000
+Processing by VolumesController#new as HTML
+  Rendering volumes/new.html.erb within layouts/application
+  [1m[36mAuthor Load (0.5ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered volumes/_form.html.erb (6.3ms)
+  Rendered volumes/new.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 41ms (Views: 31.9ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/volumes" for 127.0.0.1 at 2017-12-22 22:10:53 +0000
+Processing by VolumesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2hSX5S1oDSCRLAvfrIvBsZn2pf7g1tFm/tGlGao3BhpwSC6VWoFpqjpZEg9XOBgNbo0BimZI0kBk8s+R44iCyQ==", "volume"=>{"title"=>"kjesg", "description"=>"uegj", "author_id"=>"4"}, "commit"=>"Create Volume"}
+Unpermitted parameter: :author_id
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.3ms)[0m  [1m[31mROLLBACK[0m
+Redirected to http://localhost:3000/volumes
+Completed 302 Found in 25ms (ActiveRecord: 2.6ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-12-22 22:10:53 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 27ms (Views: 23.4ms | ActiveRecord: 0.4ms)
+
+
+Started DELETE "/volumes/1" for 127.0.0.1 at 2017-12-22 22:11:00 +0000
+Processing by VolumesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"m5U4nN25GELP0qEprrSI6jjw4hPeQ9dthMN4N4JdY9werdBY9PXPKK5cEKmQzq5PtGXKlXknMy2IBUT76ZUdBQ==", "id"=>"1"}
+  [1m[36mVolume Load (0.5ms)[0m  [1m[34mSELECT  "volumes".* FROM "volumes" WHERE "volumes"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[31mDELETE FROM "volumes" WHERE "volumes"."id" = $1[0m  [["id", 1]]
+  [1m[35m (2.5ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/authors
+Completed 302 Found in 10ms (ActiveRecord: 4.5ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2017-12-22 22:11:00 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (0.3ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 29ms (Views: 24.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/volumes" for 127.0.0.1 at 2017-12-22 22:11:04 +0000
+Processing by VolumesController#index as HTML
+  Rendering volumes/index.html.erb within layouts/application
+  [1m[36mVolume Load (0.4ms)[0m  [1m[34mSELECT "volumes".* FROM "volumes"[0m
+  Rendered volumes/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 32ms (Views: 28.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2018-01-12 10:27:39 +0000
+  [1m[35m (8.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/tech-a04/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/railties-5.1.4/lib/rails/templates/rails/welcome/index.html.erb (6.9ms)
+Completed 200 OK in 42ms (Views: 24.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/authors" for 127.0.0.1 at 2018-01-12 10:28:02 +0000
+Processing by AuthorsController#index as HTML
+  Rendering authors/index.html.erb within layouts/application
+  [1m[36mAuthor Load (9.0ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  Rendered authors/index.html.erb within layouts/application (85.4ms)
+Completed 200 OK in 507ms (Views: 422.4ms | ActiveRecord: 59.5ms)
+
+
